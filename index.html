@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>اختبار الفصل الثاني: المواطنة وتكوين شخصية طفل الروضة</title>
+<style>
+:root{--blue:#3155c9;--navy:#1e2c49;--muted:#66728a;--line:#dfe5f0;--bg:#f3f6fc;--green:#147747;--red:#ad2635}
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,Arial,sans-serif;line-height:1.85;color:var(--navy);background:linear-gradient(135deg,#edf2ff,#f8faff 55%,#edf8f5)}
+.wrap{max-width:920px;margin:auto;padding:20px 14px 44px}
+.hero{background:linear-gradient(125deg,#243b9d,#5575ec);color:#fff;border-radius:22px;padding:26px;box-shadow:0 14px 35px #243b9d22}
+.hero .tag{font-size:.88rem;opacity:.9}.hero h1{font-size:clamp(1.35rem,4vw,2.05rem);line-height:1.55;margin:8px 0}.hero p{margin:0}.chip{display:inline-block;border:1px solid #ffffff55;background:#ffffff18;border-radius:99px;padding:3px 12px;margin-top:14px;font-size:.9rem}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:16px;box-shadow:0 7px 24px #1d32630a}
+h2{font-size:1.15rem;margin:0 0 14px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field label{display:block;font-weight:bold;margin-bottom:5px}.field input{width:100%;font:inherit;padding:12px;border:1px solid #cbd4e5;border-radius:11px;background:#fbfcff}.field input:focus{outline:3px solid #3155c91b;border-color:var(--blue)}
+.small{font-size:.88rem;color:var(--muted);margin:10px 0 0}.progress{display:flex;justify-content:space-between;color:var(--muted);font-size:.9rem;margin-bottom:7px}.track{height:8px;background:#e9edf6;border-radius:20px;overflow:hidden}.bar{height:100%;width:0;background:linear-gradient(90deg,#3155c9,#39a99c);transition:width .2s}
+.question{padding:18px 0;border-bottom:1px solid var(--line)}.question:last-child{border-bottom:0}.qhead{display:flex;gap:10px}.qnum{flex:0 0 32px;height:32px;display:grid;place-items:center;background:#edf1ff;color:var(--blue);font-weight:bold;border-radius:10px}.qtitle{font-weight:bold;margin:0 0 10px}.options{display:grid;gap:8px}.opt{display:flex;gap:10px;align-items:flex-start;border:1px solid #dfe5f0;border-radius:11px;padding:10px 12px;cursor:pointer;background:#fff}.opt:hover{background:#f8f9ff;border-color:#9eaff8}.opt input{margin-top:7px;accent-color:var(--blue)}.opt span{flex:1}.opt.right{background:#eaf8ef;border-color:#65bd8b}.opt.wrong{background:#fff0f1;border-color:#e58b95}
+.feedback{display:none;padding:10px 12px;border-radius:10px;margin-top:9px;font-size:.92rem}.feedback.show{display:block}.feedback.good{background:#eaf8ef;color:#11643c}.feedback.bad{background:#fff0f1;color:#9c1b2c}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.btn{font:inherit;font-weight:bold;border:0;border-radius:11px;padding:11px 18px;cursor:pointer}.primary{background:var(--blue);color:white}.primary:hover{background:#263fa6}.secondary{background:#edf1f8;color:#34415a}.result{display:none}.score{font-size:2.5rem;font-weight:bold;color:var(--blue);line-height:1.4}.result p{color:var(--muted)}.summary{background:#f5f7fc;border-radius:12px;padding:13px;margin-top:12px}.footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:18px}
+@media(max-width:620px){.fields{grid-template-columns:1fr}.hero{padding:21px}.card{padding:15px}.actions .btn{width:100%}}
+@media print{body{background:white}.hero{box-shadow:none}.actions{display:none}.card{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<div class="tag">اختبار إلكتروني تفاعلي • إعداد معلمة الروضة</div>
+<h1>الفصل الثاني: المواطنة وتكوين شخصية طفل الروضة</h1>
+<p>اختاري إجابة واحدة لكل سؤال. بعد الانتهاء، اضغطي على زر عرض النتيجة لمراجعة الدرجة والتغذية الراجعة.</p>
+<span class="chip">15 سؤال اختيار من متعدد</span>
+</header>
+
+<section class="card" id="studentCard">
+<h2>بيانات الطالبة</h2>
+<div class="fields">
+<div class="field"><label for="studentName">اسم الطالبة</label><input id="studentName" type="text" placeholder="اكتبي الاسم بالكامل" autocomplete="name"></div>
+<div class="field"><label for="studentId">الرقم الأكاديمي</label><input id="studentId" type="text" placeholder="اكتبي الرقم الأكاديمي" inputmode="numeric"></div>
+</div>
+<p class="small">تُعرض البيانات والنتيجة في هذه الصفحة فقط، ولا تُرسل تلقائيًا إلى جهة أخرى.</p>
+</section>
+
+<section class="card" id="quizCard">
+<div class="progress"><span id="progressText">تمت الإجابة عن 0 من 15 سؤالًا</span><span>التقدم</span></div>
+<div class="track"><div class="bar" id="progressBar"></div></div>
+<form id="quizForm">
+<div id="questions"></div>
+<div class="actions">
+<button class="btn primary" type="submit">إنهاء الاختبار وعرض النتيجة</button>
+<button class="btn secondary" type="button" id="feedbackBtn">عرض التغذية الراجعة</button>
+<button class="btn secondary" type="button" id="resetBtn">إعادة الاختبار</button>
+</div>
+</form>
+</section>
+
+<section class="card result" id="resultCard" aria-live="polite">
+<div class="score" id="score">0 / 15</div>
+<h2 id="resultTitle">نتيجة الاختبار</h2>
+<p id="resultText"></p>
+<div class="summary" id="studentSummary"></div>
+<div class="actions">
+<button class="btn primary" type="button" id="printBtn">طباعة النتيجة</button>
+<button class="btn secondary" type="button" id="retryBtn">إعادة المحاولة</button>
+</div>
+</section>
+<div class="footer">الفصل الثاني: المواطنة وتكوين شخصية طفل الروضة</div>
+</div>
+<script>
+(function(){
+'use strict';
+const data = [
+{q:"ما المعنى التربوي الأقرب للمواطنة لدى طفل الروضة؟",o:["حفظ أسماء الرموز الوطنية فقط","الانتماء والمشاركة واحترام القواعد وتحمل مسؤوليات مناسبة للعمر","تنفيذ جميع الأوامر دون فهم","الحصول على ما يريده الطفل دائمًا"],a:1,f:"المواطنة في الروضة تُبنى من خبرات يومية تشمل الانتماء والمشاركة واحترام الآخرين والقواعد والمسؤولية."},
+{q:"أي موقف يعبّر عن التوازن بين الحقوق والمسؤوليات؟",o:["منع الطفل من اللعب لأنه لم يرتب أدواته","السماح لطفل واحد باستخدام الألعاب طوال الوقت","تعليم الطفل أن له حق اللعب وأن عليه انتظار دور زملائه أيضًا","اشتراط الطاعة حتى يستحق الطفل الاحترام"],a:2,f:"للطفل حق في اللعب، ولزملائه الحق نفسه؛ لذلك يتعلم تنظيم الدور دون ربط حقوقه الأساسية بالطاعة."},
+{q:"لماذا لا تعني المواطنة الطاعة العمياء؟",o:["لأن القواعد ينبغي أن تُفهم بوصفها وسيلة لتنظيم الحياة وحماية الجميع","لأن الطفل لا يحتاج إلى أي قواعد","لأن كل طفل يضع قواعده الخاصة","لأن رأي المعلمة لا أهمية له في السلامة"],a:0,f:"المواطنة تعني الالتزام الواعي بالقواعد وفهم وظيفتها، لا تنفيذ الأوامر خوفًا من العقوبة فقط."},
+{q:"أي ممارسة تحقق مشاركة حقيقية للأطفال؟",o:["سؤالهم عن رأيهم بعد اتخاذ القرار وعدم الالتفات إليه","اختيار الطفل الأكثر جرأة في كل مرة","إلزام الأطفال بقرار واحد في كل الأنشطة","إتاحة الاختيار أو التصويت في نشاط مناسب ثم توضيح النتيجة"],a:3,f:"المشاركة الحقيقية تمنح الأطفال فرصة فعلية للتأثير في بعض القرارات المناسبة لأعمارهم، مع بقاء مسؤولية الراشد عن السلامة."},
+{q:"ما الترتيب الأقرب لاتساع دوائر الانتماء في الطفولة المبكرة؟",o:["الوطن ثم الأسرة ثم الروضة","الأسرة ثم الروضة ثم المجتمع والوطن","المجتمع العالمي ثم الأسرة","الروضة فقط ولا تتسع الدائرة"],a:1,f:"يبدأ الانتماء من الدوائر القريبة والمحسوسة كالأسرة والروضة، ثم يتسع تدريجيًا إلى المجتمع والوطن."},
+{q:"أي مثال يوضح البعد المعرفي للمواطنة؟",o:["شعور الطفل بالسعادة عند مقابلة أصدقائه فقط","مساعدة زميل في حمل الأدوات","تعرف الطفل إلى دور عامل النظافة وفهم كيف يخدم المجتمع","المحافظة على الهدوء دون معرفة السبب"],a:2,f:"البعد المعرفي يشمل معرفة الطفل ببيئته وأدوار أفراد المجتمع والقواعد وسبب وجودها بصورة تناسب عمره."},
+{q:"أي موقف يعبّر عن البعد الوجداني أو الانتمائي؟",o:["شعور الطفل بأنه مقبول وله مكان ودور في جماعة الروضة","حفظ أسماء المهن دون فهمها","تطبيق قاعدة خوفًا من العقوبة","إعادة الأدوات إلى مكانها دون أي ارتباط بالجماعة"],a:0,f:"يرتبط البعد الوجداني بمشاعر الطفل تجاه ذاته وجماعته وإحساسه بأنه مقبول وذو قيمة."},
+{q:"كيف تتعلم الطفلة قيمة التعاون بصورة أفضل؟",o:["من خلال تكرار تعريف التعاون فقط","بمشاهدة المعلمة تنجز كل المهام وحدها","بمنافسة فردية لا تتطلب التفاعل","بالمشاركة في مهمة جماعية تتوزع فيها الأدوار لتحقيق هدف مشترك"],a:3,f:"يتعلم الطفل التعاون بالممارسة في أنشطة حقيقية تتطلب تبادل الأدوار وإسهام أكثر من فرد."},
+{q:"اختلف طفلان على لعبة. ما التصرف الأكثر عدلًا من المعلمة؟",o:["إعطاء اللعبة للطفل الذي بكى أولًا","الاستماع إلى الطرفين ومساعدتهما على الاتفاق على التناوب","حرمان الطفلين من اللعب دائمًا","الحكم بناءً على الطفل الذي تفضله المعلمة"],a:1,f:"تتطلب العدالة الاستماع إلى الطرفين وفهم الموقف ثم البحث عن حل منصف، مثل التناوب."},
+{q:"أي موقف يوضح الحرية المنضبطة؟",o:["السماح للطفل بأخذ لعبة زميله بالقوة","منع الطفل من الاختيار في أي نشاط","السماح له باختيار نشاط مناسب مع منعه من إيذاء الآخرين","ترك الطفل يستخدم الأدوات الخطرة دون إشراف"],a:2,f:"تتيح الحرية اختيارات مناسبة للعمر، لكنها لا تبيح السلوك الذي يضر بالآخرين أو يهدد السلامة."},
+{q:"ما المقصود بالبعد الحقوقي والمسؤولية في المواطنة؟",o:["أن يعرف الطفل أن له حقوقًا وللآخرين الحقوق نفسها ويتحمل مسؤوليات مناسبة","أن يحصل الطفل على كل ما يطلبه","أن تكون المسؤوليات شرطًا للحصول على الاحترام","أن يتنازل الطفل عن حقوقه لمصلحة المجموعة دائمًا"],a:0,f:"يربط هذا البعد بين الاعتراف بحقوق الطفل وحقوق الآخرين، وتحمل مسؤوليات تناسب قدراته دون جعل الحقوق الأساسية مشروطة بالطاعة."},
+{q:"أي نشاط يدعم البعد البيئي للمواطنة؟",o:["إلقاء المخلفات في أي مكان","استخدام الماء دون حاجة","منع الأطفال من الاقتراب من النباتات دائمًا","زراعة نبات والعناية به ووضع المخلفات في المكان المناسب"],a:3,f:"يساعد العمل العملي، مثل العناية بالنباتات والمحافظة على النظافة وترشيد الماء، على تنمية المسؤولية تجاه البيئة المشتركة."},
+{q:"ما السلوك الذي يدعم الهوية دون تعصب؟",o:["السخرية من ثقافات الآخرين","الاعتزاز باللغة والثقافة والوطن مع احترام اختلاف الآخرين","اعتبار ثقافة الطفل أفضل من الجميع","رفض اللعب مع طفل مختلف عنه"],a:1,f:"تقوم الهوية الإيجابية على الاعتزاز بالذات والانتماء مع احترام التنوع وعدم الانتقاص من الآخرين."},
+{q:"كيف تسهم القدوة في تنمية قيم المواطنة؟",o:["تجعل التوجيه اللفظي غير ضروري في كل الأحوال","تسمح للمعلمة بمخالفة القواعد التي تطلبها","يتعلم الطفل من سلوك الكبار العدل والاحترام والتعاون عمليًا","تجعل الطفل يحفظ القيم دون ممارستها"],a:2,f:"يتعلم الطفل كثيرًا بالملاحظة والتقليد؛ لذا يجب أن تتفق ممارسات المعلمة مع القيم التي تدعو إليها."},
+{q:"أي عبارة تصف الهدف الأساسي للتربية على المواطنة في مرحلة الروضة؟",o:["إعداد الطفل لممارسة الأدوار القانونية والسياسية للراشد فورًا","تعليم الطفل أن رأيه هو الأهم دائمًا","التركيز على ترديد الشعارات الوطنية فقط","بناء أسس الانتماء واحترام الحقوق والمشاركة والمسؤولية تدريجيًا"],a:3,f:"الهدف هو وضع الأسس الأولى لشخصية تنتمي وتحترم الحقوق وتشارك وتتعاون وتتحمل مسؤولية مناسبة لعمرها."}
+];
+const form=document.getElementById('quizForm');
+const questions=document.getElementById('questions');
+let submitted=false;
+function renderQuestions(){
+ questions.innerHTML=data.map((item,i)=>'<article class="question" id="question-'+i+'"><div class="qhead"><div class="qnum">'+(i+1)+'</div><div style="flex:1"><p class="qtitle">'+item.q+'</p><div class="options">'+item.o.map((opt,j)=>'<label class="opt" data-q="'+i+'" data-opt="'+j+'"><input type="radio" name="q'+i+'" value="'+j+'"><span>'+opt+'</span></label>').join('')+'</div><div class="feedback" id="feedback-'+i+'"></div></div></div></article>').join('');
+ questions.querySelectorAll('input[type="radio"]').forEach(el=>el.addEventListener('change',function(){updateProgress();if(submitted)showFeedback(Number(this.name.substring(1)));}));
+}
+function updateProgress(){
+ let count=0;data.forEach((_,i)=>{if(form.querySelector('input[name="q'+i+'"]:checked'))count++;});
+ document.getElementById('progressText').textContent='تمت الإجابة عن '+count+' من '+data.length+' سؤالًا';
+ document.getElementById('progressBar').style.width=(count/data.length*100)+'%';
+}
+function showFeedback(i){
+ const chosen=form.querySelector('input[name="q'+i+'"]:checked');
+ const fb=document.getElementById('feedback-'+i);
+ questions.querySelectorAll('[data-q="'+i+'"]').forEach(label=>{label.classList.remove('right','wrong');const n=Number(label.dataset.opt);if(n===data[i].a)label.classList.add('right');if(chosen&&n===Number(chosen.value)&&n!==data[i].a)label.classList.add('wrong');});
+ if(!chosen){fb.className='feedback show bad';fb.textContent='لم تختاري إجابة لهذا السؤال. '+data[i].f;return false;}
+ const ok=Number(chosen.value)===data[i].a;fb.className='feedback show '+(ok?'good':'bad');fb.textContent=(ok?'إجابة صحيحة! ':'إجابة غير صحيحة. ')+data[i].f;return ok;
+}
+function reviewAll(){data.forEach((_,i)=>showFeedback(i));}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+form.addEventListener('submit',function(e){
+ e.preventDefault();
+ const name=document.getElementById('studentName').value.trim();
+ const id=document.getElementById('studentId').value.trim();
+ if(!name||!id){alert('من فضلك اكتبي اسم الطالبة والرقم الأكاديمي أولًا.');document.getElementById(!name?'studentName':'studentId').focus();return;}
+ submitted=true;reviewAll();
+ let score=0;data.forEach((item,i)=>{const selected=form.querySelector('input[name="q'+i+'"]:checked');if(selected&&Number(selected.value)===item.a)score++;});
+ document.getElementById('score').textContent=score+' / '+data.length;
+ document.getElementById('resultTitle').textContent=score>=13?'ممتاز، أداء رائع!':score>=10?'جيد جدًا، واصلي التقدم':'راجعي الإجابات وحاولي مرة أخرى';
+ document.getElementById('resultText').textContent='أجبتِ إجابة صحيحة عن '+score+' سؤالًا من أصل '+data.length+'. النسبة المئوية: '+Math.round(score/data.length*100)+'%.';
+ document.getElementById('studentSummary').innerHTML='<strong>اسم الطالبة:</strong> '+escapeHtml(name)+'<br><strong>الرقم الأكاديمي:</strong> '+escapeHtml(id);
+ const result=document.getElementById('resultCard');result.style.display='block';result.scrollIntoView({behavior:'smooth',block:'start'});
+});
+document.getElementById('feedbackBtn').addEventListener('click',function(){submitted=true;reviewAll();});
+function resetQuiz(){
+ submitted=false;form.reset();document.getElementById('resultCard').style.display='none';
+ document.querySelectorAll('.feedback').forEach(el=>{el.className='feedback';el.textContent='';});
+ document.querySelectorAll('.opt').forEach(el=>el.classList.remove('right','wrong'));
+ updateProgress();document.getElementById('studentCard').scrollIntoView({behavior:'smooth',block:'start'});
+}
+document.getElementById('resetBtn').addEventListener('click',resetQuiz);
+document.getElementById('retryBtn').addEventListener('click',resetQuiz);
+document.getElementById('printBtn').addEventListener('click',function(){window.print();});
+renderQuestions();updateProgress();
+})();
+</script>
+</body>
+</html>
